@@ -48,9 +48,40 @@
               }
             }
           },
-          "400": { "description": "Email required" },
-          "401": { "description": "Unauthorized / Invalid Token" },
-          "500": { "description": "Error inserting customer or opportunity" }
+         "400": {
+  "description": "Email required",
+  "content": {
+    "application/json": {
+      "example": {
+        "success": false,
+        "message": "Email is required."
+      }
+    }
+  }
+},
+"401": {
+  "description": "Unauthorized / Invalid Token",
+  "content": {
+    "application/json": {
+      "example": {
+        "success": false,
+        "message": "Unauthorized: Invalid or missing token."
+      }
+    }
+  }
+},
+"500": {
+  "description": "Error inserting customer or opportunity",
+  "content": {
+    "application/json": {
+      "example": {
+        "success": false,
+        "message": "Internal server error: Could not insert customer or opportunity."
+      }
+    }
+  }
+}
+
         }
       }
     }
