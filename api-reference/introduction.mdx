@@ -1,33 +1,32 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Boxpilote Public API Reference'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+ A valid Boxpilote account is mandatory to access and utilize this API. If you don't already have an account, please contact Boxpilote support to request access.
 </Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The Boxpilote API allows users to seamlessly automate business processes, including creating new business opportunities and managing client information. This reference uses the OpenAPI specification to clearly outline available endpoints, authentication details, and usage examples.
 
 <Card
-  title="Plant Store Endpoints"
+  title="Endpoints"
   icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  href="http://localhost:3000/api-reference/endpoint/create"
 >
   View the OpenAPI specification file
 </Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are secured via Bearer tokens, as specified in the OpenAPI file
 
 ```json
-"security": [
+"headers": [
   {
-    "bearerAuth": []
+    "Authorization": Bearer <your_token_here>
   }
 ]
 ```
