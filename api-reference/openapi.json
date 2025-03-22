@@ -90,7 +90,7 @@
     "schemas": {
       "NewOpportunity": {
         "type": "object",
-        "required": ["email", "first_name", "last_name", "name", "phone", "type", "origin", "size", "title"],
+        "required": ["email", "first_name", "last_name", "phone", "type", "origin", "size", "title"],
         "properties": {
           "email": { "type": "string", "description": "Customer email" },
           "first_name": { "type": "string", "description": "Customer first name" },
