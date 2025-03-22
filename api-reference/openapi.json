@@ -95,12 +95,12 @@
           "email": { "type": "string", "description": "Customer email" },
           "first_name": { "type": "string", "description": "Customer first name" },
           "last_name": { "type": "string", "description": "Customer last name" },
-          "name": { "type": "string", "description": "Full name or customer's company" },
+          "name": { "type": "string", "description": "name company" },
           "phone": { "type": "string", "description": "Customer phone number" },
           "type": { "type": "string", "description": "Client type (Professionnel, Particulier, Association)" },
           "origin": { "type": "string", "description": "Lead origin (Site Web)" },
           "title": { "type": "string", "description": "Short title or description of the opportunity" },
-          "size": { "type": "string", "description": "Opportunity size" },
+          "size": { "type": "string", "description": "size m2" },
           "priority": { "type": "string", "description": "Opportunity priority (Faible, Moyen, Important)" },
           "external_id": { "type": "string", "description": "External ID of the customer" }
         }
