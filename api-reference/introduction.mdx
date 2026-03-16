@@ -11,6 +11,8 @@ description: 'Boxpilote Public API Reference'
 
 The Boxpilote API allows users to seamlessly automate business processes, including creating new business opportunities and managing client information. This reference uses the OpenAPI specification to clearly outline available endpoints, authentication details, and usage examples.
 
+**Base URL:** `https://api.boxpilote.fr`
+
 <Card
   title="Endpoints"
   icon="leaf"
@@ -30,3 +32,14 @@ All API endpoints are secured via Bearer tokens, as specified in the OpenAPI fil
   }
 ]
 ```
+
+## Rate Limiting
+
+The API enforces **throttling**: max 500 requests per second per API key.
+
+### When exceeded
+
+If you exceed the limit, the API returns **429 (Too Many Requests)** with:
+
+> Rate limit exceeded (N requests per second).
+

@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://app.boxpilote.fr"
+      "url": "https://api.boxpilote.fr"
     }
   ],
   "security": [
@@ -42,46 +42,57 @@
                   "type": "object",
                   "properties": {
                     "success": { "type": "boolean" },
-                    "opportunityId": { "type": "string" }
+                    "opportunityId": { "type": "string" },
+                    "createdAt": { "type": "string", "description": "Creation timestamp" }
                   }
                 }
               }
             }
           },
-         "400": {
-  "description": "Email required",
-  "content": {
-    "application/json": {
-      "example": {
-        "success": false,
-        "message": "Email is required."
-      }
-    }
-  }
-},
-"401": {
-  "description": "Unauthorized / Invalid Token",
-  "content": {
-    "application/json": {
-      "example": {
-        "success": false,
-        "message": "Unauthorized: Invalid or missing token."
-      }
-    }
-  }
-},
-"500": {
-  "description": "Error inserting customer or opportunity",
-  "content": {
-    "application/json": {
-      "example": {
-        "success": false,
-        "message": "Internal server error: Could not insert customer or opportunity."
-      }
-    }
-  }
-}
-
+          "400": {
+            "description": "Email required or invalid format",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Email requis"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - duplicate or conflicting resource",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Conflict: Resource already exists or conflicts with existing data."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error inserting customer or opportunity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Internal server error: Could not insert customer or opportunity."
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -90,18 +101,22 @@
     "schemas": {
       "NewOpportunity": {
         "type": "object",
-        "required": ["email", "first_name", "last_name", "phone", "type", "origin", "size", "title"],
+        "required": ["email", "first_name", "last_name", "phone"],
         "properties": {
-          "email": { "type": "string", "description": "Customer email" },
-          "first_name": { "type": "string", "description": "Customer first name" },
-          "last_name": { "type": "string", "description": "Customer last name" },
-          "name": { "type": "string", "description": "name company" },
-          "phone": { "type": "string", "description": "Customer phone number" },
-          "type": { "type": "string", "description": "Client type (Professionnel, Particulier, Association)" },
-          "origin": { "type": "string", "description": "Lead origin (Site Web)" },
-          "title": { "type": "string", "description": "Short title or description of the opportunity" },
-          "size": { "type": "string", "description": "size m2" },
-          "priority": { "type": "string", "description": "Opportunity priority (Faible, Moyen, Important)" },
+          "email": { "type": "string", "description": "Customer email (required)" },
+          "first_name": { "type": "string", "description": "Customer first name (required)" },
+          "last_name": { "type": "string", "description": "Customer last name (required)" },
+          "name": { "type": "string", "description": "Company name" },
+          "phone": { "type": "string", "description": "Customer phone number (required)" },
+          "type": { "type": "string", "description": "Client type (Professionnel, Particulier, Association). Default: Professionnel" },
+          "origin": { "type": "string", "description": "Lead origin. Default: Site Web" },
+          "title": { "type": "string", "description": "Short title or description of the opportunity. Default: Demande de démo" },
+          "size": { "type": "string", "description": "Size in m²" },
+          "priority": { "type": "string", "description": "Opportunity priority (Faible, Moyen, Important). Default: Important" },
+          "category": { "type": "array", "description": "Category tags" },
+          "referer": { "type": "string", "description": "Referrer source" },
+          "precision": { "type": "string", "description": "Additional precision/details" },
+          "estimated_date": { "type": "string", "description": "Estimated date for the opportunity" },
           "external_id": { "type": "string", "description": "External ID of the customer" }
         }
       }
@@ -114,4 +129,3 @@
     }
   }
 }
-
