@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Boxpilote API",
-    "description": "API for business opportunities, surfaces, rentals, insurances, services, products, VAT rates, and associated clients.",
+    "description": "API for business opportunities, quotes, surfaces, rentals, insurances, services, products, VAT rates, and associated clients.",
     "license": {
       "name": "MIT"
     },
@@ -503,6 +503,163 @@
           }
         }
       }
+    },
+    "/api/public/v1/quotes": {
+      "get": {
+        "description": "Lists all quotes for the authenticated center with pagination. Returns a summary (id, quote_number, total_amount, status, customer). Optional date and status filters.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          },
+          {
+            "name": "created_at_from",
+            "in": "query",
+            "description": "Filter quotes created on or after this date (ISO 8601)",
+            "schema": { "type": "string", "format": "date-time" }
+          },
+          {
+            "name": "created_at_to",
+            "in": "query",
+            "description": "Filter quotes created on or before this date (ISO 8601)",
+            "schema": { "type": "string", "format": "date-time" }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter quotes by status",
+            "schema": {
+              "type": "string",
+              "enum": ["En attente", "Expire", "Refusé", "Accepté"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of quotes with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/QuoteSummary" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching quotes",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des devis"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/quotes/{id}": {
+      "get": {
+        "description": "Gets a single quote by ID with full details including customer and quote items.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Quote ID",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quote details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/QuoteDetail" }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing quote ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "statusCode": 400,
+                  "message": "ID du devis requis"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Quote not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "statusCode": 404,
+                  "message": "Devis non trouvé"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching quote",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération du devis"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -634,6 +791,80 @@
           "type": { "type": "string", "nullable": true },
           "online": { "type": "boolean", "nullable": true },
           "media_url": { "type": "string", "nullable": true }
+        }
+      },
+      "QuoteItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "quote_id": { "type": "string", "nullable": true },
+          "item_type": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "quantity": { "type": "number", "nullable": true },
+          "amount_ht": { "type": "number", "nullable": true },
+          "total_ht": { "type": "number", "nullable": true },
+          "unit": { "type": "string", "nullable": true },
+          "unit_id": { "type": "string", "nullable": true },
+          "product_id": { "type": "string", "nullable": true },
+          "size": { "type": "number", "nullable": true },
+          "discount_duration": { "type": "number", "nullable": true },
+          "zone_id": { "type": "string", "nullable": true },
+          "is_option": { "type": "boolean", "nullable": true },
+          "order": { "type": "number", "nullable": true },
+          "surface_id": { "type": "string", "nullable": true },
+          "one_time": { "type": "boolean", "nullable": true },
+          "type": { "type": "string", "nullable": true },
+          "discountType": { "type": "string", "nullable": true },
+          "discountValue": { "type": "number", "nullable": true },
+          "discountAmount": { "type": "number", "nullable": true }
+        }
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "nullable": true },
+          "phone": { "type": "string", "nullable": true },
+          "email": { "type": "string", "nullable": true }
+        }
+      },
+      "QuoteSummary": {
+        "type": "object",
+        "description": "Simplified quote for list response",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "quote_number": { "type": "string", "nullable": true },
+          "total_amount": { "type": "number", "nullable": true },
+          "status": { "type": "string", "nullable": true },
+          "customer": { "$ref": "#/components/schemas/Customer" }
+        }
+      },
+      "QuoteDetail": {
+        "type": "object",
+        "description": "Full quote details for single quote response",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "quote_number": { "type": "string", "nullable": true },
+          "customer_id": { "type": "string", "nullable": true },
+          "total_amount": { "type": "number", "nullable": true },
+          "sub_total_amount": { "type": "number", "nullable": true },
+          "expiration_date": { "type": "string", "nullable": true },
+          "status": { "type": "string", "nullable": true },
+          "sent_email": { "type": "boolean", "nullable": true },
+          "payment_method": { "type": "string", "nullable": true },
+          "payment_terms": { "type": "string", "nullable": true },
+          "deposit": { "type": "number", "nullable": true },
+          "type": { "type": "string", "nullable": true },
+          "contract_id": { "type": "string", "nullable": true },
+          "is_archived": { "type": "boolean", "nullable": true },
+          "billing_period": { "type": "number", "nullable": true },
+          "refusal_reason": { "type": "string", "nullable": true },
+          "customer": { "$ref": "#/components/schemas/Customer" },
+          "quote_items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/QuoteItem" }
+          }
         }
       }
     },

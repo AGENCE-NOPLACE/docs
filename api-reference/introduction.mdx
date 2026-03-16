@@ -9,7 +9,7 @@ description: 'Boxpilote Public API Reference'
 
 ## Welcome
 
-The Boxpilote API allows users to automate business processes and manage their data: opportunities, surfaces, rentals, insurances, services, products, and VAT rates. This reference uses the OpenAPI specification to document available endpoints, authentication, and usage.
+The Boxpilote API allows users to automate business processes and manage their data: opportunities, quotes, surfaces, rentals, insurances, services, products, and VAT rates. This reference uses the OpenAPI specification to document available endpoints, authentication, and usage.
 
 **Base URL:** `https://api.boxpilote.fr`
 
@@ -21,6 +21,22 @@ The Boxpilote API allows users to automate business processes and manage their d
     href="/api-reference/endpoint/opportunities/create"
   >
     Create business opportunities
+  </Card>
+
+  <Card
+    title="Quotes"
+    icon="file-invoice"
+    href="/api-reference/endpoint/quotes/get"
+  >
+    List all quotes
+  </Card>
+
+  <Card
+    title="Quote by ID"
+    icon="file-invoice-dollar"
+    href="/api-reference/endpoint/quotes/get-by-id"
+  >
+    Get quote by ID
   </Card>
 
   <Card

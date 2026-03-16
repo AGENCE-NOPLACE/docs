@@ -28,6 +28,20 @@
             ]
           },
           {
+            "group": "Sales",
+            "icon": "file-invoice",
+            "pages": [
+              {
+                "group": "Quotes",
+                "icon": "file-invoice-dollar",
+                "pages": [
+                  "api-reference/endpoint/quotes/get",
+                  "api-reference/endpoint/quotes/get-by-id"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Articles",
             "icon": "file-lines",
             "pages": [
