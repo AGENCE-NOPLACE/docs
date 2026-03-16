@@ -15,50 +15,76 @@
         "groups": [
           {
             "group": "API Documentation",
+            "icon": "book",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
             "group": "Opportunities",
+            "icon": "briefcase",
             "pages": [
               "api-reference/endpoint/opportunities/create"
             ]
           },
           {
-            "group": "Surfaces",
+            "group": "Articles",
+            "icon": "file-lines",
             "pages": [
-              "api-reference/endpoint/surfaces/get"
+              {
+                "group": "Insurances",
+                "icon": "shield-halved",
+                "pages": [
+                  "api-reference/endpoint/insurances/get"
+                ]
+              },
+              {
+                "group": "Services",
+                "icon": "wrench",
+                "pages": [
+                  "api-reference/endpoint/services/get"
+                ]
+              },
+              {
+                "group": "Products",
+                "icon": "box",
+                "pages": [
+                  "api-reference/endpoint/products/get"
+                ]
+              }
             ]
           },
           {
-            "group": "Rentals",
+            "group": "Units",
+            "icon": "layer-group",
             "pages": [
-              "api-reference/endpoint/rentals/get"
+              {
+                "group": "Surfaces",
+                "icon": "square",
+                "pages": [
+                  "api-reference/endpoint/surfaces/get"
+                ]
+              },
+              {
+                "group": "Rentals",
+                "icon": "key",
+                "pages": [
+                  "api-reference/endpoint/rentals/get"
+                ]
+              }
             ]
           },
           {
-            "group": "Insurances",
+            "group": "Tax",
+            "icon": "percent",
             "pages": [
-              "api-reference/endpoint/insurances/get"
-            ]
-          },
-          {
-            "group": "Services",
-            "pages": [
-              "api-reference/endpoint/services/get"
-            ]
-          },
-          {
-            "group": "Products",
-            "pages": [
-              "api-reference/endpoint/products/get"
-            ]
-          },
-          {
-            "group": "VAT Rates",
-            "pages": [
-              "api-reference/endpoint/vat-rates/get"
+              {
+                "group": "VAT Rates",
+                "icon": "calculator",
+                "pages": [
+                  "api-reference/endpoint/vat-rates/get"
+                ]
+              }
             ]
           }
         ]
