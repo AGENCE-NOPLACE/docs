@@ -9,17 +9,69 @@ description: 'Boxpilote Public API Reference'
 
 ## Welcome
 
-The Boxpilote API allows users to seamlessly automate business processes, including creating new business opportunities and managing client information. This reference uses the OpenAPI specification to clearly outline available endpoints, authentication details, and usage examples.
+The Boxpilote API allows users to automate business processes and manage their data: opportunities, surfaces, rentals, insurances, services, products, and VAT rates. This reference uses the OpenAPI specification to document available endpoints, authentication, and usage.
 
 **Base URL:** `https://api.boxpilote.fr`
 
-<Card
-  title="Endpoints"
-  icon="leaf"
-  href="https://boxpilote.mintlify.app/api-reference/endpoint/create"
->
-  View the OpenAPI specification file
-</Card>
+<CardGroup cols={2}>
+
+  <Card
+    title="Opportunities"
+    icon="building"
+    href="/api-reference/endpoint/opportunities/create"
+  >
+    Create business opportunities
+  </Card>
+
+  <Card
+    title="Surfaces"
+    icon="layer-group"
+    href="/api-reference/endpoint/surfaces/get"
+  >
+    List surfaces
+  </Card>
+
+  <Card
+    title="Rentals"
+    icon="key"
+    href="/api-reference/endpoint/rentals/get"
+  >
+    List rentals
+  </Card>
+
+  <Card
+    title="Insurances"
+    icon="shield-halved"
+    href="/api-reference/endpoint/insurances/get"
+  >
+    List insurances
+  </Card>
+
+  <Card
+    title="Services"
+    icon="wrench"
+    href="/api-reference/endpoint/services/get"
+  >
+    List services
+  </Card>
+
+  <Card
+    title="Products"
+    icon="box"
+    href="/api-reference/endpoint/products/get"
+  >
+    List products
+  </Card>
+
+  <Card
+    title="VAT Rates"
+    icon="percent"
+    href="/api-reference/endpoint/vat-rates/get"
+  >
+    List VAT rates
+  </Card>
+
+</CardGroup>
 
 ## Authentication
 

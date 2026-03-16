@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Opportunities API",
-    "description": "This API automates the creation of business opportunities and associated clients.",
+    "title": "Boxpilote API",
+    "description": "API for business opportunities, surfaces, rentals, insurances, services, products, VAT rates, and associated clients.",
     "license": {
       "name": "MIT"
     },
@@ -95,6 +95,414 @@
           }
         }
       }
+    },
+    "/api/public/v1/surfaces": {
+      "get": {
+        "description": "Lists surfaces for the authenticated center with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of surfaces with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Surface" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching surfaces",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des surfaces"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/rentals": {
+      "get": {
+        "description": "Lists rentals for the authenticated center with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of rentals with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Rental" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching rentals",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des locations"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/vat-rates": {
+      "get": {
+        "description": "Lists VAT rates with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of VAT rates with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/VatRate" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching VAT rates",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des taux de TVA"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/insurances": {
+      "get": {
+        "description": "Lists insurances for the authenticated center with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of insurances with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Insurance" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching insurances",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des assurances"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/services": {
+      "get": {
+        "description": "Lists services for the authenticated center with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of services with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Service" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching services",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des services"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/products": {
+      "get": {
+        "description": "Lists products for the authenticated center with pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": { "type": "integer", "default": 1, "minimum": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Items per page (default: 20, max: 100)",
+            "schema": { "type": "integer", "default": 20, "minimum": 1, "maximum": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of products with pagination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Product" }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": { "type": "integer" },
+                        "limit": { "type": "integer" },
+                        "total": { "type": "integer" },
+                        "totalPages": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized / Invalid Token",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: Invalid or missing token."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error fetching products",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Erreur récupération des produits"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -118,6 +526,114 @@
           "precision": { "type": "string", "description": "Additional precision/details" },
           "estimated_date": { "type": "string", "description": "Estimated date for the opportunity" },
           "external_id": { "type": "string", "description": "External ID of the customer" }
+        }
+      },
+      "Surface": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "type": { "type": "string", "nullable": true },
+          "amount_ht": { "type": "number", "nullable": true, "description": "Amount excluding VAT" },
+          "vat_id": { "type": "string", "nullable": true },
+          "size": { "type": "number", "nullable": true },
+          "volume": { "type": "string", "nullable": true },
+          "level": { "type": "number", "nullable": true },
+          "media_url": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "title": { "type": "string" },
+          "quantity": { "type": "number" },
+          "unit": { "type": "string", "nullable": true },
+          "accounting_code": { "type": "string", "nullable": true },
+          "deposit": { "type": "number", "nullable": true },
+          "ref": { "type": "string", "nullable": true },
+          "drive": { "type": "boolean", "nullable": true },
+          "updated_at": { "type": "string", "format": "date-time", "nullable": true }
+        }
+      },
+      "Rental": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "availability": { "type": "string", "nullable": true },
+          "dimensions": { "type": "string", "nullable": true },
+          "rental_number": { "type": "string", "nullable": true },
+          "surface_id": { "type": "string", "nullable": true },
+          "details": { "type": "string", "nullable": true },
+          "largeur": { "type": "number", "nullable": true, "description": "Width" },
+          "longueur": { "type": "number", "nullable": true, "description": "Length" },
+          "hauteur": { "type": "number", "nullable": true, "description": "Height" }
+        }
+      },
+      "VatRate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "name": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "rates": { "type": "number", "nullable": true },
+          "rate_percentage": { "type": "number", "nullable": true }
+        }
+      },
+      "Insurance": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "description": { "type": "string", "nullable": true },
+          "vat_id": { "type": "string", "nullable": true },
+          "amount_ht": { "type": "number", "nullable": true, "description": "Amount excluding VAT" },
+          "reference": { "type": "string", "nullable": true },
+          "insured_amount": { "type": "number", "nullable": true },
+          "title": { "type": "string", "nullable": true },
+          "quantity": { "type": "number", "nullable": true },
+          "unit": { "type": "string", "nullable": true },
+          "accounting_code": { "type": "string", "nullable": true },
+          "item_type": { "type": "string", "nullable": true },
+          "type": { "type": "string", "nullable": true }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "title": { "type": "string", "nullable": true },
+          "amount_ht": { "type": "number", "nullable": true, "description": "Amount excluding VAT" },
+          "vat_id": { "type": "string", "nullable": true },
+          "amount_ttc": { "type": "number", "nullable": true, "description": "Amount including VAT" },
+          "reference": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "unit": { "type": "string", "nullable": true },
+          "quantity": { "type": "number", "nullable": true },
+          "accounting_code": { "type": "string", "nullable": true },
+          "item_type": { "type": "string", "nullable": true },
+          "type": { "type": "string", "nullable": true },
+          "ref": { "type": "string", "nullable": true },
+          "online": { "type": "boolean", "nullable": true },
+          "media_url": { "type": "string", "nullable": true }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "title": { "type": "string", "nullable": true },
+          "description": { "type": "string", "nullable": true },
+          "vat_id": { "type": "string", "nullable": true },
+          "unit": { "type": "string", "nullable": true },
+          "inventory": { "type": "number", "nullable": true },
+          "amount_ht": { "type": "number", "nullable": true, "description": "Amount excluding VAT" },
+          "reference": { "type": "string", "nullable": true },
+          "quantity": { "type": "number", "nullable": true },
+          "accounting_code": { "type": "string", "nullable": true },
+          "item_type": { "type": "string", "nullable": true },
+          "type": { "type": "string", "nullable": true },
+          "online": { "type": "boolean", "nullable": true },
+          "media_url": { "type": "string", "nullable": true }
         }
       }
     },

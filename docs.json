@@ -20,9 +20,45 @@
             ]
           },
           {
-            "group": "Endpoint",
+            "group": "Opportunities",
             "pages": [
-                "api-reference/endpoint/create"    
+              "api-reference/endpoint/opportunities/create"
+            ]
+          },
+          {
+            "group": "Surfaces",
+            "pages": [
+              "api-reference/endpoint/surfaces/get"
+            ]
+          },
+          {
+            "group": "Rentals",
+            "pages": [
+              "api-reference/endpoint/rentals/get"
+            ]
+          },
+          {
+            "group": "Insurances",
+            "pages": [
+              "api-reference/endpoint/insurances/get"
+            ]
+          },
+          {
+            "group": "Services",
+            "pages": [
+              "api-reference/endpoint/services/get"
+            ]
+          },
+          {
+            "group": "Products",
+            "pages": [
+              "api-reference/endpoint/products/get"
+            ]
+          },
+          {
+            "group": "VAT Rates",
+            "pages": [
+              "api-reference/endpoint/vat-rates/get"
             ]
           }
         ]
