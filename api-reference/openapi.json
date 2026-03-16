@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/api/public/v1/opportunities": {
+    "/api/public/v1/opportunities/create": {
       "post": {
         "description": "Creates a new business opportunity linked to an existing client or automatically creates a new client.",
         "requestBody": {
