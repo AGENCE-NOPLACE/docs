@@ -591,6 +591,51 @@
             }
           }
         }
+      },
+      "post": {
+        "description": "Creates a new quote with customer and quote items. Amounts in euros.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateQuoteRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quote created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CreateQuoteResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "example": { "statusCode": 400, "message": "customer.email requis" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": { "success": false, "message": "Unauthorized: Invalid or missing token." }
+              }
+            }
+          },
+          "500": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "example": { "success": false, "message": "Une erreur est survenue" }
+              }
+            }
+          }
+        }
       }
     },
     "/api/public/v1/quotes/{id}": {
@@ -683,6 +728,68 @@
           "precision": { "type": "string", "description": "Additional precision/details" },
           "estimated_date": { "type": "string", "description": "Estimated date for the opportunity" },
           "external_id": { "type": "string", "description": "External ID of the customer" }
+        }
+      },
+      "CreateQuoteCustomerInput": {
+        "type": "object",
+        "description": "Customer data. If email already exists, the quote is linked to the existing customer.",
+        "required": ["email", "first_name", "last_name", "phone", "type"],
+        "properties": {
+          "email": { "type": "string", "description": "Customer email (required)" },
+          "first_name": { "type": "string", "description": "First name (required)" },
+          "last_name": { "type": "string", "description": "Last name (required)" },
+          "phone": { "type": "string", "description": "Phone number (required)" },
+          "type": { "type": "string", "enum": ["Particulier", "Professionnel", "Association"], "description": "Customer type (required)" },
+          "name": { "type": "string", "description": "Company name or display name (optional)" }
+        }
+      },
+      "CreateQuoteItemInput": {
+        "type": "object",
+        "required": ["item_type", "description", "quantity", "amount_ht", "vat_rate", "total_ht", "unit", "order"],
+        "properties": {
+          "item_type": { "type": "string", "description": "Line type (service, product, surface…)" },
+          "description": { "type": "string", "description": "Line item label" },
+          "quantity": { "type": "number", "description": "Quantity" },
+          "amount_ht": { "type": "number", "description": "Unit price excluding VAT in euros" },
+          "vat_rate": { "type": "number", "description": "VAT rate (e.g. 20 for 20%)" },
+          "total_ht": { "type": "number", "description": "Line total excluding VAT in euros" },
+          "unit": { "type": "string", "description": "Unit (m², unit, day…)" },
+          "order": { "type": "number", "description": "Display order of the line" },
+          "size": { "type": "number", "description": "Size or dimension (optional)" },
+          "is_option": { "type": "boolean", "description": "Optional line (optional)" },
+          "one_time": { "type": "boolean", "description": "One-time payment (optional)" },
+          "type": { "type": "string", "description": "Item subtype (optional)" },
+          "discountType": { "type": "string", "description": "Discount type (optional)" },
+          "discountValue": { "type": "number", "description": "Discount value (optional)" },
+          "discountAmount": { "type": "number", "description": "Discount amount (optional)" }
+        }
+      },
+      "CreateQuoteRequest": {
+        "type": "object",
+        "required": ["customer", "total_amount", "sub_total_amount", "vat_amount", "expiration_date", "payment_method", "payment_terms", "quote_items"],
+        "properties": {
+          "customer": { "$ref": "#/components/schemas/CreateQuoteCustomerInput" },
+          "total_amount": { "type": "number", "description": "Total amount including VAT in euros" },
+          "sub_total_amount": { "type": "number", "description": "Subtotal excluding VAT in euros" },
+          "vat_amount": { "type": "number", "description": "VAT amount in euros" },
+          "expiration_date": { "type": "string", "description": "Quote expiration date (ISO 8601)" },
+          "payment_method": { "type": "string", "description": "Payment method (e.g. SEPA Direct Debit)" },
+          "payment_terms": { "type": "string", "description": "Payment terms (e.g. On receipt)" },
+          "quote_items": { "type": "array", "minItems": 1, "items": { "$ref": "#/components/schemas/CreateQuoteItemInput" }, "description": "Quote line items (at least one)" },
+          "deposit": { "type": "number", "description": "Deposit in euros (optional)" },
+          "type": { "type": "string", "description": "Quote type (optional)" },
+          "billing_period": { "type": "number", "description": "Billing period, default: 1 (optional)" },
+          "opportunity_id": { "type": "string", "description": "Linked opportunity ID (optional)" }
+        }
+      },
+      "CreateQuoteResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "description": "Creation success" },
+          "quoteId": { "type": "string", "description": "Created quote ID" },
+          "quote_number": { "type": "string", "nullable": true, "description": "Quote number" },
+          "createdAt": { "type": "string", "description": "Creation date" },
+          "pdf_url": { "type": "string", "nullable": true, "description": "PDF URL if generation succeeded" }
         }
       },
       "Surface": {

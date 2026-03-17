@@ -36,6 +36,7 @@
                 "icon": "file-invoice-dollar",
                 "pages": [
                   "api-reference/endpoint/quotes/get",
+                  "api-reference/endpoint/quotes/create",
                   "api-reference/endpoint/quotes/get-by-id"
                 ]
               }
