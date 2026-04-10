@@ -721,7 +721,7 @@
           "type": { "type": "string", "description": "Client type (Professionnel, Particulier, Association). Default: Professionnel" },
           "origin": { "type": "string", "description": "Lead origin. Default: Site Web" },
           "title": { "type": "string", "description": "Short title or description of the opportunity. Default: Demande de démo" },
-          "size": { "type": "string", "description": "Size in m²" },
+          "size": { "type": "number", "description": "Size in m²" },
           "priority": { "type": "string", "description": "Opportunity priority (Faible, Moyen, Important). Default: Important" },
           "category": { "type": "array", "description": "Category tags" },
           "referer": { "type": "string", "description": "Referrer source" },
