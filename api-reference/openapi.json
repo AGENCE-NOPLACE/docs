@@ -727,7 +727,8 @@
           "referer": { "type": "string", "description": "Referrer source" },
           "precision": { "type": "string", "description": "Additional precision/details" },
           "estimated_date": { "type": "string", "description": "Estimated date for the opportunity" },
-          "external_id": { "type": "string", "description": "External ID of the customer" }
+          "external_id": { "type": "string", "description": "External ID of the customer" },
+          "sales_cycle": { "type": "string", "enum": ["cible", "prospection", "contact", "proposition"], "description": "Sales cycle stage of the opportunity" }
         }
       },
       "CreateQuoteCustomerInput": {
